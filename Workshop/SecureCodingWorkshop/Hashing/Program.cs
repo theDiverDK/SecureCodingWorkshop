@@ -11,9 +11,9 @@ namespace SecureCodingWorkshop.Hashing
             // TODO : Calculate MD5, SHA1, SHA256 and SHA512 hashes for a series of strings
             // TODO : Base64 encode the results and display to the console.
 
-            var input = "Hello, World!";
-            var inputAsByteArray = Encoding.UTF8.GetBytes(input);
-            Console.WriteLine($"Hashes of {input}");
+            var inputMessage = "Hello, World!";
+            var inputAsByteArray = Encoding.UTF8.GetBytes(inputMessage);
+            Console.WriteLine($"Hashes of {inputMessage}");
             CalculateAndDisplayHashes(inputAsByteArray);
 
             Console.WriteLine(Environment.NewLine);

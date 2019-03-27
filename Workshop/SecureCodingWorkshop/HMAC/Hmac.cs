@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace SecureCodingWorkshop.HMAC
+namespace SecureCodingWorkshop.Hmac
 {
     public static class Hmac
     {
@@ -17,7 +17,7 @@ namespace SecureCodingWorkshop.HMAC
             }
         }
 
-        public static byte[] ComputeHmacsha256(byte[] toBeHashed, byte[] key)
+        public static byte[] ComputeHmacSha256(byte[] toBeHashed, byte[] key)
         {
             using (var hmac = new HMACSHA256(key))
             {
@@ -25,7 +25,7 @@ namespace SecureCodingWorkshop.HMAC
             }
         }
 
-        public static byte[] ComputeHmacsha1(byte[] toBeHashed, byte[] key)
+        public static byte[] ComputeHmacSha1(byte[] toBeHashed, byte[] key)
         {
             using (var hmac = new HMACSHA1(key))
             {
@@ -33,7 +33,7 @@ namespace SecureCodingWorkshop.HMAC
             }
         }
 
-        public static byte[] ComputeHmacsha512(byte[] toBeHashed, byte[] key)
+        public static byte[] ComputeHmacSha512(byte[] toBeHashed, byte[] key)
         {
             using (var hmac = new HMACSHA512(key))
             {
