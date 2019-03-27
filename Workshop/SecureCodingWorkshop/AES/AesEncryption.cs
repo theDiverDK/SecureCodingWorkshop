@@ -5,7 +5,7 @@ namespace SecureCodingWorkshop.AES
 {
     public class AesEncryption
     {
-        public byte[] GenerateRandomNumber(int length)
+        public static byte[] GenerateRandomNumber(int length)
         {
             using (var randomNumberGenerator = new RNGCryptoServiceProvider())
             {
@@ -16,7 +16,7 @@ namespace SecureCodingWorkshop.AES
             }
         }
 
-        public byte[] Encrypt(byte[] dataToEncrypt, byte[] key, byte[] iv)
+        public static byte[] Encrypt(byte[] dataToEncrypt, byte[] key, byte[] iv)
         {
             using (var aes = new AesCryptoServiceProvider())
             {
@@ -39,7 +39,7 @@ namespace SecureCodingWorkshop.AES
             }
         }
 
-        public byte[] Decrypt(byte[] dataToDecrypt, byte[] key, byte[] iv)
+        public static byte[] Decrypt(byte[] dataToDecrypt, byte[] key, byte[] iv)
         {
             using (var aes = new AesCryptoServiceProvider())
             {
