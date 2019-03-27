@@ -48,7 +48,7 @@ namespace SecureCodingWorkshop.Hmac
             Console.WriteLine("SHA1 = " + Convert.ToBase64String(Hmac.ComputeHmacSha1(inputAsByteArray, key)));
             Console.WriteLine("SHA256 = " + Convert.ToBase64String(Hmac.ComputeHmacSha256(inputAsByteArray, key)));
             Console.WriteLine("SHA512 = " + Convert.ToBase64String(Hmac.ComputeHmacSha512(inputAsByteArray, key)));
-            Console.WriteLine(Environment.NewLine);
+            Console.WriteLine();
         }
     }
 }

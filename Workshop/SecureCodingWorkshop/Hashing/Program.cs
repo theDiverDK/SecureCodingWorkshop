@@ -16,8 +16,6 @@ namespace SecureCodingWorkshop.Hashing
             Console.WriteLine($"Hashes of {inputMessage}");
             CalculateAndDisplayHashes(inputAsByteArray);
 
-            Console.WriteLine(Environment.NewLine);
-
             Console.WriteLine("Hashes of dll file");
             var fileData = File.ReadAllBytes("Hashing.dll");
             CalculateAndDisplayHashes(fileData);
@@ -29,6 +27,7 @@ namespace SecureCodingWorkshop.Hashing
             Console.WriteLine("SHA1 = " + Convert.ToBase64String(HashData.ComputeHashSha1(inputAsByteArray)));
             Console.WriteLine("SHA256 = " + Convert.ToBase64String(HashData.ComputeHashSha256(inputAsByteArray)));
             Console.WriteLine("SHA512 = " + Convert.ToBase64String(HashData.ComputeHashSha512(inputAsByteArray)));
+            Console.WriteLine();
         }
     }
 }
