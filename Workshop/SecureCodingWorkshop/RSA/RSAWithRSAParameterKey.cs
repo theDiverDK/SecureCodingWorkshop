@@ -12,6 +12,7 @@ namespace SecureCodingWorkshop.RSA
             get => _publicKey;
             set => _publicKey = value;
         }
+
         public RSAParameters PrivateKey
         {
             get => _privateKey;
