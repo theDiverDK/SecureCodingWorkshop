@@ -7,12 +7,23 @@ namespace SecureCodingWorkshop.RSA
         private RSAParameters _publicKey;
         private RSAParameters _privateKey;
 
+        public RSAParameters PublicKey
+        {
+            get => _publicKey;
+            set => _publicKey = value;
+        }
+        public RSAParameters PrivateKey
+        {
+            get => _privateKey;
+            set => _privateKey = value;
+        }
+
         public void AssignNewKey()
         {
             using (var rsa = new RSACryptoServiceProvider(2048))
             {
                 rsa.PersistKeyInCsp = false;
-                _publicKey = rsa.ExportParameters(false);
+                PublicKey = rsa.ExportParameters(false);
                 _privateKey = rsa.ExportParameters(true);
             }
         }
@@ -25,7 +36,7 @@ namespace SecureCodingWorkshop.RSA
             using (var rsa = new RSACryptoServiceProvider())
             {
                 rsa.PersistKeyInCsp = false;
-                rsa.ImportParameters(_publicKey);
+                rsa.ImportParameters(PublicKey);
 
                 cipherbytes = rsa.Encrypt(dataToEncrypt, true);
             }
