@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace AzureKeyVault.HybridWithIntegrityAndSignature
 {
@@ -12,16 +13,54 @@ namespace AzureKeyVault.HybridWithIntegrityAndSignature
         {
             _keyVault = keyVault;
         }
-   
 
-        public EncryptedPacket EncryptData(byte[] original, string keyId)
+
+        public async Task<EncryptedPacket> EncryptData(byte[] original, string keyId)
         {
-            throw new NotImplementedException();
+            var sessionKey = _aes.GenerateRandomNumber(32);
+
+            var encryptedPacket = new EncryptedPacket
+            {
+                Iv = _aes.GenerateRandomNumber(16)
+            };
+
+            encryptedPacket.EncryptedData = _aes.Encrypt(original, sessionKey, encryptedPacket.Iv);
+
+            encryptedPacket.EncryptedSessionKey = await _keyVault.EncryptAsync(keyId, sessionKey);
+
+            using (var hmac = new HMACSHA256(sessionKey))
+            {
+                encryptedPacket.Hmac = hmac.ComputeHash(Combine(encryptedPacket.EncryptedData, encryptedPacket.Iv));
+            }
+
+            encryptedPacket.Signature = await _keyVault.Sign(keyId, encryptedPacket.Hmac);
+
+            return encryptedPacket;
         }
 
-        public byte[] DecryptData(EncryptedPacket encryptedPacket, string keyId)
+        public async Task<byte[]> DecryptData(EncryptedPacket encryptedPacket, string keyId)
         {
-            throw new NotImplementedException();
+            var decryptedSessionKey = await _keyVault.DecryptAsync(keyId, encryptedPacket.EncryptedSessionKey);
+
+            using (var hmac = new HMACSHA256(decryptedSessionKey))
+            {
+                var hmacToCheck = hmac.ComputeHash(Combine(encryptedPacket.EncryptedData, encryptedPacket.Iv));
+
+                if (!Compare(encryptedPacket.Hmac, hmacToCheck))
+                {
+                    throw new CryptographicException("HMAC for decryption does not match encrypted packet.");
+                }
+
+                if (!await _keyVault.Verify(keyId, encryptedPacket.Hmac, encryptedPacket.Signature))
+                {
+                    throw new CryptographicException("Digital Signature can not be verified.");
+                }
+
+            }
+
+            var decryptedData = _aes.Decrypt(encryptedPacket.EncryptedData, decryptedSessionKey, encryptedPacket.Iv);
+
+            return decryptedData;
         }
 
         private static bool Compare(byte[] array1, byte[] array2)
@@ -45,6 +84,6 @@ namespace AzureKeyVault.HybridWithIntegrityAndSignature
 
             return ret;
 
-        } 
+        }
     }
 }
