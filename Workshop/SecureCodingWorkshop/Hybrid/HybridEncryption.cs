@@ -12,7 +12,10 @@ namespace SecureCodingWorkshop.Hybrid
             var sessionKey = _aes.GenerateRandomNumber(32);
 
             // Create the encrypted packet and generate the IV.
-            var encryptedPacket = new EncryptedPacket { Iv = _aes.GenerateRandomNumber(16) };
+            var encryptedPacket = new EncryptedPacket
+            {
+                Iv = _aes.GenerateRandomNumber(16)
+            };
 
             // Encrypt our data with AES.
             encryptedPacket.EncryptedData = _aes.Encrypt(original, sessionKey, encryptedPacket.Iv);
