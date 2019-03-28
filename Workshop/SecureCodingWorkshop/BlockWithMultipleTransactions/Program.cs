@@ -76,6 +76,7 @@ namespace BlockChainCourse.BlockWithMultipleTransactions
             chain.VerifyChain();
 
             Console.WriteLine();
+            Console.ReadLine();
         }
     }
 }

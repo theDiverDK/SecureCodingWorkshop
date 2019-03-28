@@ -33,9 +33,9 @@ namespace BlockChainCourse.ProofOfWorkTest
                     TimeSpan ts = stopWatch.Elapsed;
 
                     // Format and display the TimeSpan value.
-                    string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+                    string elapsedTime = $"{ts.Hours:00}:{ts.Minutes:00}:{ts.Seconds:00}.{ts.Milliseconds / 10:00}";
                     
-                    Console.WriteLine("Difficulty Level " + Difficulty + " - Nonce = " + Nonce + " - Elapsed = " + elapsedTime +  " - " + hashedData);
+                    Console.WriteLine($"Difficulty Level {Difficulty} - Nonce = {Nonce} - Elapsed = {elapsedTime} - {hashedData}");
                     return hashedData;
                 }
 
